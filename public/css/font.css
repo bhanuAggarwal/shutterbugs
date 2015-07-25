@@ -1,0 +1,9 @@
+@font-face {
+  font-family:'Bebas';
+  src:url('../fonts/BebasNeue.otf');
+}
+body,html *{
+  font-family:'Bebas';
+  font-size:20px;
+  letter-spacing:1px;
+}

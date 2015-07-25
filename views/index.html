@@ -1,0 +1,140 @@
+<html>
+<head>
+  <link href="../css/login_signup.css" rel="stylesheet" />
+</head>
+  <body>
+  <script>
+    //Google login
+
+    (function() {
+      var po = document.createElement('script');
+      po.type = 'text/javascript';
+      po.async = true;
+      po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(po, s);
+    })();
+    function onLoadCallback()
+    {
+      gapi.client.setApiKey('AIzaSyAO1GmbC0CHgXuX4zw5Gf6ooPwVCwMsqVc'); //set your API KEY
+      gapi.client.load('plus', 'v1',function(){});//Load Google + API
+    }
+
+    //FaceBook login
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '841330285974126',
+        xfbml      : true,
+        version    : 'v2.4'
+      });
+    };
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <div class="screen">
+    <div class="login-signup-panel">
+      <div class="login-panel">
+        <button onclick="FB_Login()">Log in from Facebook</button><br />
+        <button onclick="G_Login()">Log in from Google</button><br />
+        <div>
+          <input type="text" placeholder="Username" /><br />
+          <input type="password" /><br />
+        </div>
+      </div>
+      <div class="signup-panel">
+        <button>Sign Up</button><br />
+        <button onclick="FB_Signup()">Sign Up from FaceBook</button><br />
+        <button>Sign Up from Google</button><br />
+      </div>
+    </div>
+  </div>
+  <script src="../js/jquery.js"></script>
+    <script>
+    //for FaceBook login
+    function FB_Login(){
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          FB_AJAX();
+        }
+        else FB.login(function(response) {
+          if (response.status === 'connected') {
+            FB_AJAX();
+          }
+        },{scope:'user_hometown, user_location, user_photos, user_about_me, email, publish_actions, public_profile'});
+      });
+    }
+
+    function FB_Signup(){
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          FB_AJAX();
+        }
+        else FB.login(function(response) {
+          if (response.status === 'connected') {
+            FB_AJAX();
+          }
+        },{scope:'user_hometown, user_location, user_photos, user_about_me, email, publish_actions, public_profile'});
+      });
+    }
+
+    function FB_AJAX(){
+      FB.api('/me?fields=email,picture,name',function(response) {
+        var user_obj ={
+          name:response.name,
+          email:response.email,
+          img_url:response.picture.data.url,
+          login_type:"facebook"
+        };
+        $.post('userLogin',user_obj,function(data){
+          //Do nothing here
+        });
+      });
+    }
+
+    //for Google Login
+    function G_Login()
+    {
+      //function to prefetch data from GooglePlus
+      //and prepopulate fields over here
+      //then show the screen
+      var myParams = {
+        'clientid' : '48652630080-5q3aoplcj0gtifst7fekfbn5d3d819lq.apps.googleusercontent.com', //You need to set client id
+        'cookiepolicy' : 'single_host_origin',
+        'callback' : 'G_AJAX', //callback function
+        'approvalprompt':'force',
+        'scope' : 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read'
+      };
+      gapi.auth.signIn(myParams);
+    }
+
+    //callBack function
+    function G_AJAX(result)
+    {
+    	if(result['status']['signed_in'])
+    	{
+    	}
+    	var request = gapi.client.plus.people.get(
+    		{
+    			'userId': 'me'
+    		});
+    		request.execute(function (resp)
+    		{
+          var user_obj ={
+            name:resp.name.givenName+' '+resp.name.familyName,
+            email:resp.emails[0].value,
+            img_url:resp.image.url,
+            login_type:"google"
+          };
+          $.post("userLogin",user_obj,function(data){
+            //Do nothing
+          });
+    		});
+    	}
+    </script>
+  </body>
+</html>

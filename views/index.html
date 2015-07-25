@@ -1,6 +1,8 @@
 <html>
 <head>
   <link href="../css/login_signup.css" rel="stylesheet" />
+  <link href="../flaticons/flaticon.css" rel="stylesheet" />
+  <link href="../css/font.css" rel="stylesheet" />
 </head>
   <body>
   <script>
@@ -38,18 +40,18 @@
   </script>
   <div class="screen">
     <div class="login-signup-panel">
+      <div class="title">Shutterbugs</div>
       <div class="login-panel">
-        <button onclick="FB_Login()">Log in from Facebook</button><br />
-        <button onclick="G_Login()">Log in from Google</button><br />
-        <div>
-          <input type="text" placeholder="Username" /><br />
-          <input type="password" /><br />
+        <div class="full">
+          <input type="text" placeholder="Username" class="full"/><br />
+          <input type="password" placeholder="password" class="full"/><br />
+          <button class="full">Log In</button>
         </div>
-      </div>
-      <div class="signup-panel">
-        <button>Sign Up</button><br />
-        <button onclick="FB_Signup()">Sign Up from FaceBook</button><br />
-        <button>Sign Up from Google</button><br />
+        <div class="full">
+          <button onclick="FB_Login()" class="half">Log in using <i class="flaticon-facebook23"></i></button>
+          <button onclick="G_Login()" class="half">Log in using <i class="flaticon-google116"></i></button><br />
+        </div>
+        <div class="clearfix"></div>
       </div>
     </div>
   </div>

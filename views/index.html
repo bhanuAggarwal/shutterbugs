@@ -44,20 +44,38 @@
       <div class="title">Shutterbugs</div>
       <div class="login-panel">
         <div class="full">
-          <input type="text" placeholder="Username" class="full"/><br />
-          <input type="password" placeholder="password" class="full"/><br />
-          <button class="full">Log In</button>
+          <form>
+            <input type="text" placeholder="Username" class="full" required/><br />
+            <input type="password" placeholder="password" class="full" required/><br />
+            <button class="full">Log In</button>
+          </form>
         </div>
         <div class="full">
           <button onclick="FB_Login()" class="half">Log in using <i class="flaticon-facebook23"></i></button>
           <button onclick="G_Login()" class="half">Log in using <i class="flaticon-google116"></i></button><br />
+          <button class="full small" onclick="signUpShow()">Not yet registered? Sign Up</button>
         </div>
         <div class="clearfix"></div>
+      </div>
+      <div class="signup-panel">
+        <div class="full hidden hidden-signup">
+          <form>
+            <input type="text" placeholder="name" class="full" id="su-name"required/><br />
+            <input type="email" placeholder="e-mail" class="full" id="su-email" required/><br />
+            <input type="password" placeholder="password" class="full" id="su-password" required/><br />
+            <input type="password" placeholder="confirm password" class="full" id="su-conf-password"required/><br />
+            <button class="full" onclick="signUp_AJAX()">Sign Up</button>
+          </form>
+          <button onclick="FB_Login()" class="half">Sign Up using <i class="flaticon-facebook23"></i></button>
+          <button onclick="G_Login()" class="half">Sign Up using <i class="flaticon-google116"></i></button><br />
+          <button onclick="loginShow()" class="full small">Already Registered? Login</button>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
   </div>
   <script src="../js/jquery.js"></script>
-    <script>
+  <script>
     //for FaceBook login
     function FB_Login(){
       FB.getLoginStatus(function(response) {
@@ -138,6 +156,35 @@
           });
     		});
     	}
+
+      //transition functions
+      function signUpShow(){
+        $(".hidden-signup").slideDown().show();
+        $(".login-panel").hide();
+      }
+
+      function loginShow(){
+        $(".hidden-signup").hide();
+        $(".login-panel").slideDown().show();
+      }
+
+      function signUp_AJAX(){
+        if($("#su-password").val()!=$("#su-conf-password").val())
+        {
+          alert("Passwords do not match!");
+          return;
+        }
+        var obj = {
+          name:$("#su-name").val(),
+          email:$("#su-email").val(),
+          password:$("#su-password").val(),
+        };
+        $.post("route_to_node",
+          obj,
+          function(data){
+            //Do not do anything here
+        });
+      }
     </script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,12 +8,24 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var location = require('./routes/location');
 var app = express();
 
+// Database
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/shutterbugs');
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    console.log("Db Connected");
+    req.db = db;
+    next();
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -22,8 +35,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+    secret: "Sssshhhh",
+    name: "shutterbugs",
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use('/', routes);
 app.use('/users', users);
+app.use('/location',location);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

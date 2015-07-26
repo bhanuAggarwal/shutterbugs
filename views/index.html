@@ -45,9 +45,9 @@
       <div class="login-panel">
         <div class="full">
           <form>
-            <input type="text" placeholder="Username" class="full" required/><br />
-            <input type="password" placeholder="password" class="full" required/><br />
-            <button class="full">Log In</button>
+            <input type="text" placeholder="Email" id="l-email" class="full" required/><br />
+            <input type="password" placeholder="password" id="l-password" class="full" required/><br />
+            <button class="full" onclick="checkLogin()">Log In</button>
           </form>
         </div>
         <div class="full">
@@ -111,8 +111,9 @@
           img_url:response.picture.data.url,
           login_type:"facebook"
         };
-        $.post('userLogin',user_obj,function(data){
+        $.post('users/userLogin',user_obj,function(data){
           //Do nothing here
+          window.location.replace("/sample");
         });
       });
     }
@@ -151,7 +152,7 @@
             img_url:resp.image.url,
             login_type:"google"
           };
-          $.post("userLogin",user_obj,function(data){
+          $.post("users/userLogin",user_obj,function(data){
             //Do nothing
           });
     		});
@@ -179,10 +180,22 @@
           email:$("#su-email").val(),
           password:$("#su-password").val(),
         };
-        $.post("route_to_node",
+
+        $.post("users/userLogin",
           obj,
           function(data){
-            //Do not do anything here
+            console.log(data);
+        });
+      }
+
+      function checkLogin(){
+        var user_obj = {
+          email : $("#l-email").val(),
+          password : $("#l-password").val()
+        }
+
+        $.post("users/checkLogin",user_obj,function(data){
+          console.log(data);
         });
       }
     </script>

@@ -48,7 +48,6 @@ body,html{
 .content-screen{
   padding:3%;
   height:auto;
-  background:#EDE1A8;
   text-align:justify;
 }
 .sub-screen{
@@ -58,19 +57,25 @@ body,html{
 .title{
   font-size:90px;
   text-align: center;
+  z-index:30;
+  position: relative;
 }
 #sandbox{
   font-family: 'Writing';
-  background-repeat: no-repeat;
-  background-size: cover;
-  position:relative;
+  position: relative;
+  z-index:20;
 }
 #sandbox-proxy{
   position:absolute;
   width:100%;
   height:100%;
+  bottom:0;
   left:0;
-  top:0;
+  z-index:10;
+  top:12%;
+  opacity:0.65;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 @media only screen and (max-width:768px){
   .modal-menu{width:60%;}

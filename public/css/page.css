@@ -1,0 +1,79 @@
+/*Contains basic style sheet information about the page, in general and the menu*/
+body,html{
+  margin:0;
+  padding:0;
+  height:100%;
+  width:100%;
+}
+.overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  z-index:100;
+}
+.modal-menu{
+  background:white;
+  height:100%;
+  width:30%;
+  float:right;
+}
+.modal-menu li{
+  list-style-type: none;
+  padding:2%;
+  border-bottom:1px solid gray;
+  width:80%;
+  cursor:pointer;
+}
+.modal-menu li a{
+  text-decoration: none;
+}
+.flat-btn{
+  cursor:pointer;
+  margin-right:5%;
+  margin-left:5%;
+}
+.hidden{
+  display:none;
+}
+#toggle-menu{
+  float:right;
+}
+.user-panel{
+  float:left;
+}
+.content-screen{
+  padding:3%;
+  height:auto;
+  background:#EDE1A8;
+  text-align:justify;
+}
+.sub-screen{
+  padding-top:2%;
+  padding-bottom:2%;
+}
+.title{
+  font-size:90px;
+  text-align: center;
+}
+#sandbox{
+  font-family: 'Writing';
+  background-repeat: no-repeat;
+  background-size: cover;
+  position:relative;
+}
+#sandbox-proxy{
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+}
+@media only screen and (max-width:768px){
+  .modal-menu{width:60%;}
+  .modal-menu li{text-align: center;}
+  .title{font-size:70px;}
+}

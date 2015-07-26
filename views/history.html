@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>History</title>
+	<link href="../css/page.css" rel="stylesheet" />
+	<link href="../flaticons/flaticon.css" rel="stylesheet" />
+	<link href="../css/font.css" rel="stylesheet" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<script src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+	<div class = "overlay">
+		<div class = "modal-menu">
+			<i class="flaticon-left217 flat-btn" id="back"></i>
+			<div class = "user-info">
+				<img src="../images/proxy.gif" />
+				<div id="u-name-modal">MennuKuram VB</div>
+			</div>
+			<ul class="menu">
+				<li> My Profile</li>
+				<li> Explore My Neighborhood</li>
+				<li> Vintage Diaries</li>
+				<li> Photographers around me</li>
+				<li> Logout</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main">
+		<div class="sub-screen">
+			<div class="user-panel">
+				<img src="../images/proxy.gif" />
+				<span id="u-name">MennuKuram VB</span>
+			</div>
+			<i class="flaticon-show5 flat-btn" id="toggle-menu"></i><!--The Menu Flaticon comes here-->
+		</div>
+		<br style="clear:both" />
+		<div class = "content-screen">
+			<div class="title">Vintage Diaries</div>
+			<div id="sandbox"></div>
+			<div id="sandbox-proxy"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script>
+	$("#back").click(function(){
+		$(".modal-menu").hide();
+		$(".overlay").hide();
+		$("#toggle-menu").show();
+	});
+	$("#toggle-menu").click(function(){
+		$(".overlay").show();
+		$(".modal-menu").show();
+		$(this).hide();
+	});
+	</script>
+	<script>
+	$(document).ready(function(){
+		$.ajax({
+			type	: "GET",
+			url		: "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=india",
+			dataType: "jsonp",
+			crossDomain : true,
+			success : function(data){
+				var obj = data.query.pages;
+				for(var key in obj){
+					$("#sandbox").html(obj[key].extract);
+					console.log(obj[key].extract);
+				}
+			}
+		});
+	});
+
+	google.load('search', '1');
+	var imageSearch;
+	function searchComplete() {
+		if (imageSearch.results && imageSearch.results.length > 0) {
+			var results = imageSearch.results;
+			console.log(results);
+			slideImages(results);
+		}
+	}
+
+	function OnLoad() {
+		imageSearch = new google.search.ImageSearch();
+		imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+		var image = imageSearch.execute("India Gate");
+		google.search.Search.getBranding('branding');
+	}
+	google.setOnLoadCallback(OnLoad);
+
+	function slideImages(images){
+		var i =0;
+		var image = $('#sandbox-proxy');
+		image.css('background-image', 'url('+images[0].url+')');
+		setInterval(function(){
+			image.fadeOut(1000, function () {
+				image.css('background-image', 'url(' + images [i++].url +')');
+				image.fadeIn(1000);
+			});
+			if(i == images.length)
+			i = 0;
+		}, 5000);
+	}
+	</script>
+</body>
+</html>

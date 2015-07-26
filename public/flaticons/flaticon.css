@@ -11,10 +11,16 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
-font-style: normal;
+	font-style: normal;
 }.flaticon-facebook23:before {
 	content: "\e000";
 }
 .flaticon-google116:before {
 	content: "\e001";
+}
+.flaticon-left217:before {
+	content: "\e002";
+}
+.flaticon-show5:before {
+	content: "\e003";
 }

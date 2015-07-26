@@ -1,3 +1,7 @@
+@font-face{
+  font-family: 'Writing';
+  src:url('../fonts/writing.otf');
+}
 @font-face {
   font-family:'Bebas';
   src:url('../fonts/BebasNeue.otf');
